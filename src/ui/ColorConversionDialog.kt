@@ -18,9 +18,11 @@ class ColorConversionDialog : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent? {
-        val dialogPanel = JPanel(GridLayout(3, 5, 3, 3))
+        val dialogPanel = JPanel(GridLayout(5, 5, 3, 3))
         initColorConversionView(dialogPanel, ConversionType.TYPE_NUM_TO_HEX)
         initColorConversionView(dialogPanel, ConversionType.TYPE_HEX_TO_NUM)
+        initColorConversionView(dialogPanel, ConversionType.TYPE_RGB_NUM_TO_HEX)
+        initColorConversionView(dialogPanel, ConversionType.TYPE_RGB_HEX_TO_NUM)
         initColorConversionView(dialogPanel, ConversionType.TYPE_PERCENT_TO_HEX)
 
         return dialogPanel
@@ -37,6 +39,14 @@ class ColorConversionDialog : DialogWrapper(true) {
             ConversionType.TYPE_HEX_TO_NUM -> {
                 leftLabelStr = "HEX: "
                 rightLabelStr = "ARGB IS: "
+            }
+            ConversionType.TYPE_RGB_NUM_TO_HEX -> {
+                leftLabelStr = "RGB: "
+                rightLabelStr = "HEX IS: "
+            }
+            ConversionType.TYPE_RGB_HEX_TO_NUM -> {
+                leftLabelStr = "HEX: "
+                rightLabelStr = "RGB IS: "
             }
             ConversionType.TYPE_PERCENT_TO_HEX -> {
                 leftLabelStr = "ALPHA IN PERCENT: "
@@ -61,6 +71,12 @@ class ColorConversionDialog : DialogWrapper(true) {
                 ConversionType.TYPE_HEX_TO_NUM -> {
                     converseHexToNum(leftText.text)
                 }
+                ConversionType.TYPE_RGB_NUM_TO_HEX -> {
+                    converseRGBNumToHex(leftText.text)
+                }
+                ConversionType.TYPE_RGB_HEX_TO_NUM -> {
+                    converseRGBHexToNum(leftText.text)
+                }
                 ConversionType.TYPE_PERCENT_TO_HEX -> {
                     conversePercentToHex(leftText.text)
                 }
@@ -75,6 +91,25 @@ class ColorConversionDialog : DialogWrapper(true) {
         dialogPanel.add(btCalculate)
         dialogPanel.add(rightLabel)
         dialogPanel.add(rightText)
+    }
+
+    private fun converseRGBHexToNum(num: String?): String? {
+        return num?.run {
+            val hexR = num.substring(1, 3)
+            val hexG = num.substring(3, 5)
+            val hexB = num.substring(5, 7)
+            "${hexR.toInt(16)} ${hexG.toInt(16)} ${hexB.toInt(16)}"
+        }
+    }
+
+    private fun converseRGBNumToHex(num: String?): String? {
+        return num?.run {
+            val nums = num.split(" ")
+            val r = nums[0].toInt()
+            val g = nums[1].toInt()
+            val b = nums[2].toInt()
+            "#${toUpperString(r)}${toUpperString(g)}${toUpperString(b)}"
+        }
     }
 
     private fun converseNumToHex(num: String?): String? {
@@ -116,5 +151,7 @@ class ColorConversionDialog : DialogWrapper(true) {
 object ConversionType {
     const val TYPE_NUM_TO_HEX = 0
     const val TYPE_HEX_TO_NUM = 1
-    const val TYPE_PERCENT_TO_HEX = 2
+    const val TYPE_RGB_NUM_TO_HEX = 2
+    const val TYPE_RGB_HEX_TO_NUM = 3
+    const val TYPE_PERCENT_TO_HEX = 4
 }
