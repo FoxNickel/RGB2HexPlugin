@@ -25,8 +25,8 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="ColorConversionAction" class="ColorConversionAction"
-                text="ColorConversionAction" description="Open color conversion panel.">
+        <action id="action.ColorConversionAction" class="action.ColorConversionAction"
+                text="action.ColorConversionAction" description="Open color conversion panel.">
             <add-to-group group-id="MainMenu" anchor="after" relative-to-action="WindowMenu"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta T"/>
         </action>
