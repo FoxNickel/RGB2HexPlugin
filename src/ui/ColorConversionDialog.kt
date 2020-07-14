@@ -18,12 +18,14 @@ class ColorConversionDialog : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent? {
-        val dialogPanel = JPanel(GridLayout(5, 5, 3, 3))
+        val dialogPanel = JPanel(GridLayout(7, 5, 3, 3))
         initColorConversionView(dialogPanel, ConversionType.TYPE_NUM_TO_HEX)
         initColorConversionView(dialogPanel, ConversionType.TYPE_HEX_TO_NUM)
         initColorConversionView(dialogPanel, ConversionType.TYPE_RGB_NUM_TO_HEX)
         initColorConversionView(dialogPanel, ConversionType.TYPE_RGB_HEX_TO_NUM)
         initColorConversionView(dialogPanel, ConversionType.TYPE_PERCENT_TO_HEX)
+        initColorConversionView(dialogPanel, ConversionType.TYPE_SMALL_TO_UPPER)
+        initColorConversionView(dialogPanel, ConversionType.TYPE_UPPER_TO_SMALL)
 
         return dialogPanel
     }
@@ -51,6 +53,14 @@ class ColorConversionDialog : DialogWrapper(true) {
             ConversionType.TYPE_PERCENT_TO_HEX -> {
                 leftLabelStr = "ALPHA IN PERCENT: "
                 rightLabelStr = "HEX IS: "
+            }
+            ConversionType.TYPE_SMALL_TO_UPPER -> {
+                leftLabelStr = "SMALL STRING: "
+                rightLabelStr = "UPPER IS: "
+            }
+            ConversionType.TYPE_UPPER_TO_SMALL -> {
+                leftLabelStr = "UPPER STRING: "
+                rightLabelStr = "SMALL IS: "
             }
             else -> {
                 leftLabelStr = "ARGB: "
@@ -80,6 +90,12 @@ class ColorConversionDialog : DialogWrapper(true) {
                 ConversionType.TYPE_PERCENT_TO_HEX -> {
                     conversePercentToHex(leftText.text)
                 }
+                ConversionType.TYPE_SMALL_TO_UPPER -> {
+                    converseSmallToUpper(leftText.text)
+                }
+                ConversionType.TYPE_UPPER_TO_SMALL -> {
+                    converseUpperToSmall(leftText.text)
+                }
                 else -> {
                     converseNumToHex(leftText.text)
                 }
@@ -91,6 +107,18 @@ class ColorConversionDialog : DialogWrapper(true) {
         dialogPanel.add(btCalculate)
         dialogPanel.add(rightLabel)
         dialogPanel.add(rightText)
+    }
+
+    private fun converseUpperToSmall(text: String?): String? {
+        return text?.run {
+            toLowerCase()
+        } ?: ""
+    }
+
+    private fun converseSmallToUpper(text: String?): String? {
+        return text?.run {
+            toUpperCase()
+        } ?: ""
     }
 
     private fun converseRGBHexToNum(num: String?): String? {
@@ -154,4 +182,6 @@ object ConversionType {
     const val TYPE_RGB_NUM_TO_HEX = 2
     const val TYPE_RGB_HEX_TO_NUM = 3
     const val TYPE_PERCENT_TO_HEX = 4
+    const val TYPE_SMALL_TO_UPPER = 5
+    const val TYPE_UPPER_TO_SMALL = 6
 }

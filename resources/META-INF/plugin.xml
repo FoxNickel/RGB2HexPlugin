@@ -1,13 +1,14 @@
 <idea-plugin>
     <id>cn.foxnickel.plugin.rgb2hex</id>
     <name>RGB2Hex</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="nickelfox@foxmail.com" url="">NickelFox</vendor>
 
     <description>RGB/ARGB 2 Hex or Hex 2 RGB/ARGB Plugin.</description>
 
     <change-notes>
-        First Version,Basic Conversion Function.
+        1.0 -> First Version,Basic Conversion Function.
+        1.1 -> add string lower upper conversion.
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
